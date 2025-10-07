@@ -1,8 +1,9 @@
-import * as z from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from 'react-router-dom';
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -11,14 +12,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
-import { SignupValidation } from "@/lib/validation"
+import { SignupValidation } from "@/lib/validation";
+import Loader from "@/components/shared/Loader";
 
 const SignupForm = () => {
 
-  const isLoading = true;
+  const isLoading = false;
 
 
   const form = useForm<z.infer<typeof SignupValidation>>({
@@ -31,8 +33,10 @@ const SignupForm = () => {
     },
   })
 
+  // define a submit handler
   function onSubmit(values: z.infer<typeof SignupValidation>) {
-    console.log(values)
+    // creating users 
+    // const newUser = await createUserAccount(values);
   }
 
   return (
@@ -42,7 +46,7 @@ const SignupForm = () => {
             <img src="/assets/images/logo.svg" alt="logo" />
 
             <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">create a new account</h2>
-            <p className="text-light-3 small-mediom md:base-reguler">To use AfghanGram enter your account details</p>
+            <p className="text-light-3 small-mediom md:base-reguler">To use AfghanGram, please enter your account details</p>
          
 
 
@@ -100,13 +104,22 @@ const SignupForm = () => {
           )}
         />
 
-        <Button type="submit" className="shad-button_primary">
-          {isLoading ? (
-              <div className="flex-center gap-2">
-                  Loading...
+        <Button type="submit" className="shad-button_primary mt-3">
+            {isLoading ? (
+              <div className="flex items-center justify-center gap-2">
+                <Loader /> Loading...
               </div>
-          ): "Sign Up"}
-        </Button>
+            ) : (
+              "Sign Up"
+            )}
+          </Button>
+          <p className="text-small-reguler text-light-2 text-center mt-2">
+            Already have an account? 
+            <Link to="/login"
+             className="text-primary-500 
+             text-small-semibold ml-1">
+              Log in</Link>
+          </p>
       </form>
        </div>
     </Form>
